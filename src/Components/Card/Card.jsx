@@ -11,7 +11,13 @@ function Card({ items }) {
         <div className="card-body items-center text-center">
           <h2 className="card-title">{name}</h2>
           <p>{recipe}</p>
-          <AddToCart/>
+          <AddToCart
+            bgColor="#dadada"
+            textColor="#BB8506"
+            borderBottom="#BB8506"
+            btntext="Add to Cart"
+            borderBottomWidth="2px"
+          ></AddToCart>
         </div>
       </div>
     </div>
