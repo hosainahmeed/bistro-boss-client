@@ -17,12 +17,12 @@ function MenuCard() {
   }, []);
 
   return (
-    <div>
+    <div className="px-2 overflow-x-hidden flex items-center justify-center flex-col">
       <SectionTitle
         subheading="Should Try"
         heading="CHEF RECOMMENDS"
       ></SectionTitle>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 my-12">
         {offered.map((items) => (
           <Card key={items._id} items={items} />
         ))}

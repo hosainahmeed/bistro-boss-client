@@ -4,7 +4,7 @@ function Card({ items }) {
   const { image, name, recipe } = items;
   return (
     <div className="gird md:grid-cols-2">
-      <div className="card bg-base-100 md:max-w-96 h-96 shadow-xl">
+      <div className="card bg-base-100 md:w-96 h-96 shadow-xl">
         <figure>
           <img src={image} alt={name} />
         </figure>

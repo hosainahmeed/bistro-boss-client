@@ -3,8 +3,8 @@ const number = {
 };
 function ContactNumber() {
   return (
-    <div className="flex items-center justify-center bg-[#222] text-white md:my-[130px]">
-      <h1 className="text-4xl md:px-78 md:py-[96px]">Call uS :{number.digit}</h1>
+    <div className="flex items-center justify-center bg-[#222] text-white my-[130px]">
+      <h1 className="text-4xl px-78 py-[96px] text-center">Call uS :{number.digit}</h1>
     </div>
   );
 }
