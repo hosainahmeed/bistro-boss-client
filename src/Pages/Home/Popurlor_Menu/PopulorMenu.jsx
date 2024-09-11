@@ -1,28 +1,25 @@
 import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
-import { useEffect, useState } from "react";
 import MenuItem from "../Home/Shared/MenuItem/MenuItem";
 import ContactNumber from "../../../Components/ContactNumber/ContactNumber";
 import AddToCart from "../../../Components/Buttons/AddtoCart/AddToCart";
+import useMenu from "../../../hooks/useMenu";
 
-function PopulorMenu() {
-  const [menu, setMenu] = useState([]);
+function PopulorMenu({ hidden }) {
+  const [menu] = useMenu();
 
-  useEffect(() => {
-    fetch("menu.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const populorItem = data.filter((item) => item.category === "popular");
-        setMenu(populorItem);
-      });
-  }, []);
+  const populorItem = menu.filter((item) => item.category === "popular");
 
   return (
     <>
       <div className="max-w-screen-xl mx-auto my-12 px-2 flex flex-col items-center gap-12">
-        <SectionTitle subheading="Check it out" heading="FROM OUR MENU" />
+        <SectionTitle
+          hidden={hidden}
+          subheading="Check it out"
+          heading="FROM OUR MENU"
+        />
 
         <div className="space-y-8 grid md:grid-cols-2 gap-4">
-          {menu.map((items) => (
+          {populorItem.map((items) => (
             <MenuItem key={items._id} items={items}></MenuItem>
           ))}
         </div>
@@ -33,7 +30,7 @@ function PopulorMenu() {
           borderBottom="black"
         ></AddToCart>
       </div>
-      <ContactNumber />
+      <ContactNumber hidden={hidden} />
     </>
   );
 }

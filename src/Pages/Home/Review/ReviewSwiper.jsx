@@ -10,7 +10,7 @@ import "@smastrom/react-rating/style.css";
 function ReviewSwiper() {
   const [review, setReview] = useState([]);
   useEffect(() => {
-    fetch("review.json")
+    fetch("http://localhost:5000/review")
       .then((res) => res.json())
       .then((data) => setReview(data));
   }, []);

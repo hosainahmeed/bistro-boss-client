@@ -17,7 +17,12 @@ const MenuItems = ({ items, activePath }) => (
   </ul>
 );
 
-function Navbar({ brandName = "BISTRO BOSS", tagline = "Restaurant", menuItems, profileOptions }) {
+function Navbar({
+  brandName = "BISTRO BOSS",
+  tagline = "Restaurant",
+  menuItems,
+  profileOptions,
+}) {
   const location = useLocation();
 
   return (
@@ -29,14 +34,11 @@ function Navbar({ brandName = "BISTRO BOSS", tagline = "Restaurant", menuItems, 
         </Link>
       </div>
 
-      {/* Navbar Center for larger screens */}
       <div className="navbar-center hidden md:flex">
         <MenuItems items={menuItems} activePath={location.pathname} />
       </div>
 
-      {/* Navbar End */}
       <div className="navbar-end">
-        {/* Dropdown for mobile menu */}
         <div className="dropdown dropdown-end md:hidden">
           <div tabIndex={0} role="button" className="px-2">
             Menu
@@ -60,7 +62,6 @@ function Navbar({ brandName = "BISTRO BOSS", tagline = "Restaurant", menuItems, 
           </ul>
         </div>
 
-        {/* Profile Avatar & Dropdown */}
         <div className="dropdown dropdown-end">
           <button tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
@@ -78,7 +79,9 @@ function Navbar({ brandName = "BISTRO BOSS", tagline = "Restaurant", menuItems, 
               <li key={option.name}>
                 <Link to={option.path} className="justify-between">
                   {option.name}
-                  {option.badge && <span className="badge">{option.badge}</span>}
+                  {option.badge && (
+                    <span className="badge">{option.badge}</span>
+                  )}
                 </Link>
               </li>
             ))}
@@ -95,7 +98,7 @@ Navbar.defaultProps = {
     { name: "CONTACT US", path: "/contact" },
     { name: "DASHBOARD", path: "/dashboard" },
     { name: "Our Menu", path: "/menu" },
-    { name: "Our Shop", path: "/shop" },
+    { name: "Our Order", path: "/order" },
   ],
   profileOptions: [
     { name: "Profile", path: "/profile", badge: "New" },

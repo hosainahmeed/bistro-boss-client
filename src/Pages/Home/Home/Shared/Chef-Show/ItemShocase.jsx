@@ -1,11 +1,14 @@
-import chefService from "../../../../../assets/home/chef-service.jpg";
 import ItmShow from "../../../../../Layout/ItemShowcase/ItmShow";
 
-function ItemShocase() {
+function ItemShocase({ bgImage, title }) {
   const backgroundImageStyle = {
-    backgroundImage: `url(${chefService})`,
+    backgroundImage: `url(${bgImage})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
+  };
+  const darkMode = {
+    backgroundColor: "#03030358",
+    color: "white",
   };
 
   return (
@@ -15,8 +18,8 @@ function ItemShocase() {
     >
       <div className="text-center max-w-screen-lg mx-auto">
         <ItmShow
-          backgroundColor="white"
-          chefHeading="Bistro Boss"
+          darkMode={darkMode}
+          chefHeading={title}
           chefsubHeading="Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, libero accusamus laborum deserunt ratione dolor officiis praesentium! Deserunt magni aperiam dolor eius dolore at, nihil iusto ducimus incidunt quibusdam nemo."
         />
       </div>

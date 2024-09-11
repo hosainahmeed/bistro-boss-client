@@ -1,13 +1,11 @@
 import PropTypes from "prop-types";
 
-function ItmShow({ chefHeading, chefsubHeading, backgroundColor }) {
-  const bgColorStyle = {
-    backgroundColor: backgroundColor || "white", 
-  };
+function ItmShow({ chefHeading, chefsubHeading, darkMode }) {
+  
 
   return (
     <div
-      style={bgColorStyle}
+      style={darkMode}
       className="p-4 sm:p-8 md:p-12 lg:p-16 my-4"
     >
       <h1 className="uppercase font-cinzel text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">
