@@ -6,6 +6,7 @@ function AddToCart({
   textColor = "#FFFFFF",
   borderBottom = "#BB8506",
   borderBottomWidth = "2px",
+   addToCartItem
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -23,6 +24,7 @@ function AddToCart({
 
   return (
     <button
+      onClick={addToCartItem}
       style={isHovered ? mouseOverStyle : btnStyle}
       onMouseOver={() => setIsHovered(true)}
       onMouseOut={() => setIsHovered(false)}
