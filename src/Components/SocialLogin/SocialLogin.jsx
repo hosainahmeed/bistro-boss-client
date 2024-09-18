@@ -1,38 +1,28 @@
-import { useContext } from "react";
 import { FaGoogle } from "react-icons/fa";
-import { AuthContext } from "../../provider/AuthProvider";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 function SocialLogin() {
-  const { googleSignIn } = useContext(AuthContext);
-
+  const { googleSignIn } = useAuth();
+  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const from = location.state?.from?.pathname || "/";
-  const handleGoogleLogin = () => {
-    googleSignIn().then((result) => {
-      const loggedInUser = result.user;
-      const saveUser = {
-        name: loggedInUser.displayName,
-        email: loggedInUser.eamil,
-      };
-      fetch("http://localhost:5000/users", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(saveUser),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.insertedId) {
-            navigate(from, { replace: true });
+  const handleGoogleLogin = () =>{
+      googleSignIn()
+      .then(result =>{
+          console.log(result.user);
+          const userInfo = {
+              email: result.user?.email,
+              name: result.user?.displayName
           }
-        });
-    });
-  };
-
+          axiosPublic.post('/users', userInfo)
+          .then(res =>{
+              console.log(res.data);
+              navigate('/');
+          })
+      })
+  }
   return (
     <div>
       <button

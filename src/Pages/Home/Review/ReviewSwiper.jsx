@@ -7,12 +7,12 @@ import { Rating } from "@smastrom/react-rating";
 import { FaQuoteLeft } from "react-icons/fa";
 
 import "@smastrom/react-rating/style.css";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 function ReviewSwiper() {
   const [review, setReview] = useState([]);
+  const axiosSecure = useAxiosSecure();
   useEffect(() => {
-    fetch("http://localhost:5000/review")
-      .then((res) => res.json())
-      .then((data) => setReview(data));
+    axiosSecure.get("/review").then((res) => setReview(res.data));
   }, []);
   return (
     <div className="my-12">

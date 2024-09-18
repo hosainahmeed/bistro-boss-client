@@ -1,21 +1,20 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { FaShoppingCart } from "react-icons/fa";
-import { MdRateReview } from "react-icons/md";
-import { BsJournalBookmarkFill } from "react-icons/bs";
-import { GiWallet } from "react-icons/gi";
+import { FaAd, FaBook, FaCalendar, FaList, FaShoppingCart, FaUtensils } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
 import { FaShoppingBag } from "react-icons/fa";
 import { MdContactMail } from "react-icons/md";
-import { FaCartShopping } from "react-icons/fa6";
 import { CiMenuFries } from "react-icons/ci";
 import useCart from "../hooks/useCart";
+import { FaUsers } from "react-icons/fa6";
+import useAdmin from "../hooks/useAdmin";
 
 function DashBoard() {
-
   const [cart] = useCart();
+  // TODO:
+  // const isAdmin = true;
+  const [isAdmin] = useAdmin();
 
-  
   return (
     <div>
       <div className="drawer lg:drawer-open">
@@ -43,36 +42,73 @@ function DashBoard() {
             <h1 className="font-black text-xl md:text-4xl">BISTRO BOSS</h1>
             <h1 className="text-xl md:text-4xl mb-4">Restaurant</h1>
             {/* Sidebar content here */}
-            <li>
-              <NavLink to="/dashboard/userhome">
-                <FaShoppingCart />
-                User Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/dashboard/reservation">
-                <BsJournalBookmarkFill />
-                Reservation
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/dashboard/history">
-                <GiWallet />
-                Payment history
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/dashboard/mycart">
-                <FaCartShopping />
-                My cart <div className="badge">+{cart?.length}</div>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/dashboard/reviews">
-                <MdRateReview />
-                Add review
-              </NavLink>
-            </li>
+            {isAdmin ? (
+              <>
+                <li>
+                  <NavLink to="/dashboard/adminHome">
+                    <FaHome></FaHome>
+                    Admin Home
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/addItems">
+                    <FaUtensils></FaUtensils>
+                    Add Items
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/manageItems">
+                    <FaList></FaList>
+                    Manage Items
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/bookings">
+                    <FaBook></FaBook>
+                    Manage Bookings
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/allusers">
+                    <FaUsers></FaUsers>
+                    All Users
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <NavLink to="/dashboard/userHome">
+                    <FaHome></FaHome>
+                    User Home
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/reservation">
+                    <FaCalendar></FaCalendar>
+                    Reservation
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/mycart">
+                    <FaShoppingCart></FaShoppingCart>
+                    My Cart ({cart.length})
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/review">
+                    <FaAd></FaAd>
+                    Add a Review
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/bookings">
+                    <FaList></FaList>
+                    My Bookings
+                  </NavLink>
+                </li>
+              </>
+            )}
             <div className="w-full h-[1px] bg-white"></div>
             <li>
               <NavLink to="/">

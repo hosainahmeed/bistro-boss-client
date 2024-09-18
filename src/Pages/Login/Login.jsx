@@ -1,64 +1,96 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import bgImage from "../../assets/reservation/wood-grain-pattern-gray1x.png";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
   validateCaptcha,
 } from "react-simple-captcha";
-import { AuthContext } from "../../provider/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import authImage from "../../assets/others/authentication2.png";
 import { Helmet } from "react-helmet-async";
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
+import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 
 function Login() {
-  const [changePassword, setChangePassword] = useState(true);
-  const changeIcon = changePassword === true ? false : true;
-  const [disabled, setDisabled] = useState(true);
-
-  const { signIn } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const from = location.state?.from?.pathname || "/";
-  useEffect(() => {
-    loadCaptchaEnginge(6);
-  }, []);
-
   const bgimage = {
     backgroundImage: `url(${bgImage})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
   };
+  const [changePassword, setChangePassword] = useState(true);
+  const changeIcon = changePassword === true ? false : true;
+  const [disabled, setDisabled] = useState(true);
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleValidCaptcha = (e) => {
-    const user_captcha_value = e.target.value;
+  const from = location.state?.from?.pathname || "/";
+  // console.log("state in the location login page", location.state);
 
-    if (validateCaptcha(user_captcha_value) == true) {
-      setDisabled(false);
-    }
-  };
+  useEffect(() => {
+    loadCaptchaEnginge(6);
+  }, []);
 
   const handleLogin = (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
-    signIn(email, password).then((result) => {
-      const user = result.user;
-      console.log(user);
+
+    if (!email || !password) {
       Swal.fire({
-        position: "center-center",
-        icon: "success",
-        title: "Login successfull.",
-        showConfirmButton: false,
-        timer: 1500
+        icon: "error",
+        title: "Oops...",
+        text: !email
+          ? "Please enter a valid email address!"
+          : "Please enter a valid password!",
       });
-      navigate(from, { replace: true });
-    });
+      return;
+    }
+
+    // console.log(email, password);
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        if (user) {
+          Swal.fire({
+            title: "User Login Successful.",
+            showClass: {
+              popup: "animate__animated animate__fadeInDown",
+            },
+            hideClass: {
+              popup: "animate__animated animate__fadeOutUp",
+            },
+          });
+          navigate(from, { replace: true });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid email or password. Please try again!",
+          });
+        }
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text:
+            error.message || "An unexpected error occurred. Please try again.",
+        });
+      });
+  };
+
+  const handleValidCaptcha = (e) => {
+    const user_captcha_value = e.target.value;
+    if (validateCaptcha(user_captcha_value)) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
   };
 
   return (
@@ -129,6 +161,7 @@ function Login() {
                   placeholder="Type Captcha above here."
                   className="input input-bordered w-full"
                   // required
+                  // TODO:required uncomment
                 />
               </div>
 
@@ -137,7 +170,7 @@ function Login() {
                   Forgot password?
                 </a>
               </label>
-{/* todo disabled make right down instant of false value */}
+              {/* todo disabled make right down instant of false value */}
               <div className="form-control mt-6">
                 <input
                   disabled={false}
@@ -154,6 +187,9 @@ function Login() {
                 <Link to="/signup"> Create a New Account</Link>
               </small>
             </p>
+            <div className="text-center">
+              <SocialLogin></SocialLogin>
+            </div>
           </div>
         </div>
       </div>

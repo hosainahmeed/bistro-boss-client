@@ -1,32 +1,33 @@
-import { useContext } from "react";
 import AddToCart from "../Buttons/AddtoCart/AddToCart";
-import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
 import useCart from "../../hooks/useCart";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 function Card({ items }) {
   const { image, name, recipe, price, _id } = items;
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
   const location = useLocation();
-
+  const axiosSecure = useAxiosSecure();
   const [, refetch] = useCart();
+
   const addToCartItem = () => {
     // console.log(item);
 
     if (user && user.email) {
-      const cartItem = { menuItemId: _id, name, price, email: user.email ,itemImage:image};
-      fetch("http://localhost:5000/carts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(cartItem),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.insertedId) {
+      const cartItem = {
+        menuItemId: _id,
+        name,
+        price,
+        email: user.email,
+        itemImage: image,
+      };
+      axiosSecure
+        .post("/carts", cartItem)
+        .then((res) => {
+          if (res.data.insertedId) {
             refetch();
             Swal.fire({
               icon: "success",
@@ -52,6 +53,48 @@ function Card({ items }) {
     }
   };
 
+  // const addToCartItem = () => {
+  //   if (user && user.email) {
+  //     const cartItem = {
+  //       menuId: _id,
+  //       email: user.email,
+  //       name,
+  //       image,
+  //       price,
+  //     };
+  //     axiosSecure
+  //       .post("/carts", cartItem)
+  //       .then((res) => {
+  //         // console.log("card added");
+  //         // console.log(res.data);
+  //         if (res.data.insertedId) {
+  //           Swal.fire({
+  //             icon: "success",
+  //             title: `${name} added to your cart`,
+  //             showConfirmButton: false,
+  //             timer: 1500,
+  //           });
+  //           // refetch cart to update the cart items count
+  //           refetch();
+  //         }
+  //       });
+  //   } else {
+  //     Swal.fire({
+  //       title: "You are not Logged In",
+  //       text: "Please login to add to the cart?",
+  //       icon: "warning",
+  //       showCancelButton: true,
+  //       confirmButtonColor: "#3085d6",
+  //       cancelButtonColor: "#d33",
+  //       confirmButtonText: "Yes, login!",
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         //   send the user to the login page
+  //         navigate("/login", { state: { from: location } });
+  //       }
+  //     });
+  //   }
+  // };
   return (
     <div className="gird md:grid-cols-2">
       <div className="card bg-base-100 md:w-80 h-96 shadow-xl">

@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../../../provider/AuthProvider";
 import useCart from "../../../../../hooks/useCart";
+import useAuth from "../../../../../hooks/useAuth";
 
 const NavBar = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut } = useAuth();
   const [cart] = useCart();
   const navigate = useNavigate();
   
@@ -32,6 +31,7 @@ const NavBar = () => {
       </li>
       <li className="btn btn-ghost btn-circle">
         <Link to="/dashboard/mycart">
+        
         <div className="indicator">
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -2,18 +2,20 @@ import { Link, useNavigate } from "react-router-dom";
 import authImage from "../../assets/others/authentication2.png";
 import bgImage from "../../assets/reservation/wood-grain-pattern-gray1x.png";
 import { useForm } from "react-hook-form";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
-import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import SocialLogin from "../../Components/SocialLogin/SocialLogin";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 function SignUp() {
   const [changePassword, setChangePassword] = useState(true);
   const changeIcon = changePassword === true ? false : true;
-  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const { createUser, updateUserProfile } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const {
     register,
@@ -22,45 +24,77 @@ function SignUp() {
     reset,
   } = useForm();
 
+  // const onSubmit = async (data) => {
+  //   try {
+  //     const result = await createUser(data.email, data.password);
+  //     const loggedUser = result.user;
+  //     console.log(loggedUser);
+
+  //     await updateUserProfile(data.name, data.photoURL);
+
+  //     const saveUser = { name: data.name, email: data.email };
+
+  //     const response = await axiosSecure.post("/users", saveUser);
+  //     console.log(response.data);
+      
+  //     const responseData = await response.data;
+  //     if (responseData.insertedId) {
+  //       reset();
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "Sign up successfully",
+  //         showConfirmButton: false,
+  //         timer: 500,
+  //       });
+  //       navigate("/login");
+  //     }
+  //   } catch (error) {
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Oops...",
+  //       text: `${error.message || error}`,
+  //     });
+  //   }
+  // };
+
+
   const onSubmit = async (data) => {
     try {
       const result = await createUser(data.email, data.password);
       const loggedUser = result.user;
       console.log(loggedUser);
-
+  
       await updateUserProfile(data.name, data.photoURL);
-
+  
       const saveUser = { name: data.name, email: data.email };
-
-      const response = await fetch("http://localhost:5000/users", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(saveUser),
-      });
-
-      const responseData = await response.json();
-      if (responseData.insertedId) {
+  
+      const response = await axiosSecure.post("/users", saveUser);
+      console.log(response.data);
+      
+      // Check if the user was saved successfully
+      if (response.data.insertedId) {
         reset();
         Swal.fire({
-          position: "center-center",
           icon: "success",
           title: "Sign up successfully",
           showConfirmButton: false,
           timer: 500,
         });
         navigate("/login");
+      } else {
+        throw new Error("User not saved");
       }
     } catch (error) {
+      // Handle error display
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: `${error.message || error}`,
+        text: `${error.message || "An unexpected error occurred"}`,
       });
     }
   };
 
+  
   const bgimage = {
     backgroundImage: `url(${bgImage})`,
     backgroundPosition: "center",

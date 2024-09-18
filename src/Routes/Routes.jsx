@@ -9,7 +9,8 @@ import SignUp from "../Pages/SignUp/SignUp";
 import PrivetRouts from "./PrivetRouts";
 import Secret from "../Pages/Home/Home/Shared/Secret/Secret";
 import DashBoard from "../Layout/DashBoard";
-import Mycart from "../Pages/Mycart/Mycart";
+import Mycart from "../Pages/Dashboard/Mycart/Mycart";
+import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 
 export const router = createBrowserRouter([
   {
@@ -59,8 +60,8 @@ export const router = createBrowserRouter([
             element:<Mycart></Mycart>
         },
         {
-            path:"userhome",
-            element:<Mycart></Mycart>
+            path:"allusers",
+            element:<AllUsers></AllUsers>
         },
         {
             path:"reservation",
