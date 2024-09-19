@@ -53,11 +53,11 @@ function DashBoard() {
                 <li>
                   <NavLink to="/dashboard/addItems">
                     <FaUtensils></FaUtensils>
-                    Add Items
+                    Add an Item
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dashboard/manageItems">
+                  <NavLink to="/dashboard/manageItem">
                     <FaList></FaList>
                     Manage Items
                   </NavLink>
@@ -87,6 +87,11 @@ function DashBoard() {
                   <NavLink to="/dashboard/reservation">
                     <FaCalendar></FaCalendar>
                     Reservation
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/history">
+                    <FaShoppingCart></FaShoppingCart>PATMENT HISTORY
                   </NavLink>
                 </li>
                 <li>

@@ -27,9 +27,7 @@ function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || "/";
-  // console.log("state in the location login page", location.state);
-
+  const from = location.state?.from?.pathname || "/";;
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
@@ -50,8 +48,6 @@ function Login() {
       });
       return;
     }
-
-    // console.log(email, password);
     signIn(email, password)
       .then((result) => {
         const user = result.user;

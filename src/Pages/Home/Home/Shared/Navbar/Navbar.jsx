@@ -12,7 +12,6 @@ const NavBar = () => {
       .then(() => {
         navigate('/login');
       })
-      .catch((error) => console.log(error));
   };
 
   const navOptions = (

@@ -21,7 +21,8 @@ function Mycart() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/carts/${id}`)
+        axiosSecure
+          .delete(`/carts/${id}`)
           .then((res) => {
             if (res.data.deletedCount > 0) {
               refetch();
@@ -52,9 +53,11 @@ function Mycart() {
       <div className="text-base mb-4 flex-col items-end md:flex-row md:text-3xl uppercase flex md:items-center md:justify-between">
         <h1>Total orders: {cart.length}</h1>
         <h1>Total price: ${total}</h1>
-        <button className="btn btn-sm md:btn-md lg:btn-lg uppercase bg-[#D1A054]">
-          Pay
-        </button>
+        <Link to="/dashboard/payment">
+          <button className="btn btn-sm md:btn-md lg:btn-lg uppercase bg-[#D1A054]">
+            Pay
+          </button>
+        </Link>
       </div>
 
       {cart.length === 0 ? (

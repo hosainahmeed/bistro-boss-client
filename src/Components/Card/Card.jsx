@@ -14,7 +14,6 @@ function Card({ items }) {
   const [, refetch] = useCart();
 
   const addToCartItem = () => {
-    // console.log(item);
 
     if (user && user.email) {
       const cartItem = {

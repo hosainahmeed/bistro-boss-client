@@ -30,7 +30,7 @@ function AllUsers() {
       text: `You want to delete ${user.name}!`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#3085d6",  
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {

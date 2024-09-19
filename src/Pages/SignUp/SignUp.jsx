@@ -36,7 +36,7 @@ function SignUp() {
 
   //     const response = await axiosSecure.post("/users", saveUser);
   //     console.log(response.data);
-      
+
   //     const responseData = await response.data;
   //     if (responseData.insertedId) {
   //       reset();
@@ -57,20 +57,12 @@ function SignUp() {
   //   }
   // };
 
-
   const onSubmit = async (data) => {
     try {
-      const result = await createUser(data.email, data.password);
-      const loggedUser = result.user;
-      console.log(loggedUser);
-  
+      await createUser(data.email, data.password);
       await updateUserProfile(data.name, data.photoURL);
-  
       const saveUser = { name: data.name, email: data.email };
-  
       const response = await axiosSecure.post("/users", saveUser);
-      console.log(response.data);
-      
       // Check if the user was saved successfully
       if (response.data.insertedId) {
         reset();
@@ -94,7 +86,6 @@ function SignUp() {
     }
   };
 
-  
   const bgimage = {
     backgroundImage: `url(${bgImage})`,
     backgroundPosition: "center",

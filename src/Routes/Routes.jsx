@@ -11,6 +11,10 @@ import Secret from "../Pages/Home/Home/Shared/Secret/Secret";
 import DashBoard from "../Layout/DashBoard";
 import Mycart from "../Pages/Dashboard/Mycart/Mycart";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
+import AddItem from "../Pages/Dashboard/AddItem/AddItem";
+import AdminRouts from "./AdminRouts";
+import ManageItem from "../Pages/Dashboard/ManageItem/ManageItem";
+import Payment from "../Pages/Dashboard/PaymenHistory/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -53,29 +57,45 @@ export const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <PrivetRouts><DashBoard></DashBoard></PrivetRouts>,
-    children:[
-        {
-            path:"mycart",
-            element:<Mycart></Mycart>
-        },
-        {
-            path:"allusers",
-            element:<AllUsers></AllUsers>
-        },
-        {
-            path:"reservation",
-            element:<Mycart></Mycart>
-        },
-        {
-            path:"history",
-            element:<Mycart></Mycart>
-        },
-        {
-            path:"reviews",
-            element:<Mycart></Mycart>
-        },
+    element: (
+      <PrivetRouts>
+        <DashBoard></DashBoard>
+      </PrivetRouts>
+    ),
+    children: [
+      {
+        path: "mycart",
+        element: <Mycart></Mycart>,
+      },
+      {
+        path: "payment",
+        element: <Payment></Payment>,
+      },
 
-    ]
+      {
+        path: "allusers",
+        element: (
+          <AdminRouts>
+            <AllUsers></AllUsers>
+          </AdminRouts>
+        ),
+      },
+      {
+        path: "addItems",
+        element: (
+          <AdminRouts>
+            <AddItem></AddItem>
+          </AdminRouts>
+        ),
+      },
+      {
+        path: "manageItem",
+        element: (
+          <AdminRouts>
+            <ManageItem></ManageItem>
+          </AdminRouts>
+        ),
+      },
+    ],
   },
 ]);
