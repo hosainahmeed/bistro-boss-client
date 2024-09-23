@@ -7,7 +7,6 @@ import Contact from "../Pages/ContactUs/Contact/Contact";
 import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
 import PrivetRouts from "./PrivetRouts";
-import Secret from "../Pages/Home/Home/Shared/Secret/Secret";
 import DashBoard from "../Layout/DashBoard";
 import Mycart from "../Pages/Dashboard/Mycart/Mycart";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
@@ -15,6 +14,8 @@ import AddItem from "../Pages/Dashboard/AddItem/AddItem";
 import AdminRouts from "./AdminRouts";
 import ManageItem from "../Pages/Dashboard/ManageItem/ManageItem";
 import Payment from "../Pages/Dashboard/PaymenHistory/Payment";
+import AdminHome from "../Pages/Dashboard/AdminHome/AdminHome";
+import UserHome from "../Pages/Dashboard/UserHome/UserHome";
 
 export const router = createBrowserRouter([
   {
@@ -45,14 +46,6 @@ export const router = createBrowserRouter([
         path: "signup",
         element: <SignUp></SignUp>,
       },
-      {
-        path: "secret",
-        element: (
-          <PrivetRouts>
-            <Secret></Secret>
-          </PrivetRouts>
-        ),
-      },
     ],
   },
   {
@@ -64,12 +57,24 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
+        path: "userhome",
+        element: <UserHome></UserHome>,
+      },
+      {
         path: "mycart",
         element: <Mycart></Mycart>,
       },
       {
         path: "payment",
         element: <Payment></Payment>,
+      },
+      {
+        path: "adminhome",
+        element: (
+          <AdminRouts>
+            <AdminHome></AdminHome>
+          </AdminRouts>
+        ),
       },
 
       {

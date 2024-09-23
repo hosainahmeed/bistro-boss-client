@@ -57,7 +57,6 @@ function AllUsers() {
       }
     });
   };
-
   const handleMakeAdmin = (user) => {
     axiosSecure
       .patch(`/users/admin/${user._id}`)

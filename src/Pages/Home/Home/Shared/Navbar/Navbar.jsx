@@ -1,10 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import useCart from "../../../../../hooks/useCart";
 import useAuth from "../../../../../hooks/useAuth";
+import useAdmin from "../../../../../hooks/useAdmin";
 
 const NavBar = () => {
   const { user, logOut } = useAuth();
   const [cart] = useCart();
+  let [isAdmin]= useAdmin()
   const navigate = useNavigate();
   
   const handleLogOut = () => {
@@ -23,7 +25,7 @@ const NavBar = () => {
         <Link to="/menu">Our Menu</Link>
       </li>
       <li>
-        <Link to="/secret">Secret</Link>
+        <Link to={isAdmin?'/dashboard/adminhome':'/dashboard/userhome'}>Dashboard</Link>
       </li>
       <li>
         <Link to="/order/salad">Order Food</Link>

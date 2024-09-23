@@ -53,48 +53,6 @@ function Card({ items }) {
     }
   };
 
-  // const addToCartItem = () => {
-  //   if (user && user.email) {
-  //     const cartItem = {
-  //       menuId: _id,
-  //       email: user.email,
-  //       name,
-  //       image,
-  //       price,
-  //     };
-  //     axiosSecure
-  //       .post("/carts", cartItem)
-  //       .then((res) => {
-  //         // console.log("card added");
-  //         // console.log(res.data);
-  //         if (res.data.insertedId) {
-  //           Swal.fire({
-  //             icon: "success",
-  //             title: `${name} added to your cart`,
-  //             showConfirmButton: false,
-  //             timer: 1500,
-  //           });
-  //           // refetch cart to update the cart items count
-  //           refetch();
-  //         }
-  //       });
-  //   } else {
-  //     Swal.fire({
-  //       title: "You are not Logged In",
-  //       text: "Please login to add to the cart?",
-  //       icon: "warning",
-  //       showCancelButton: true,
-  //       confirmButtonColor: "#3085d6",
-  //       cancelButtonColor: "#d33",
-  //       confirmButtonText: "Yes, login!",
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         //   send the user to the login page
-  //         navigate("/login", { state: { from: location } });
-  //       }
-  //     });
-  //   }
-  // };
   return (
     <div className="gird md:grid-cols-2">
       <div className="card bg-base-100 md:w-80 h-96 shadow-xl">

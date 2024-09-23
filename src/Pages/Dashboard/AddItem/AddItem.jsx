@@ -36,7 +36,8 @@ function AddItem() {
           };
           console.log(data);
 
-          axiosSecure.post("/menu", newItem).then((res) => {
+          axiosSecure.post("/menu", newItem)
+          .then((res) => {
             console.log(res);
             if (res.data.insertedId) {
               newItem = { _id: res.data.insertedId };
@@ -82,19 +83,19 @@ function AddItem() {
               <span className="label-text font-semibold">Category*</span>
             </div>
             <select
-              defaultValue="Category"
-              {...register("Category", { required: true })}
+              defaultValue="category"
+              {...register("category", { required: true })}
               className="select select-bordered"
             >
-              {errors.Category?.type === "required" && (
+              {errors.category?.type === "required" && (
                 <span>this field required</span>
               )}
               <option disabled>Category</option>
-              <option>Salad</option>
-              <option>Pasta</option>
-              <option>Pizza</option>
-              <option>Burger</option>
-              <option>Desi</option>
+              <option>salad</option>
+              <option>pasta</option>
+              <option>pizza</option>
+              <option>burger</option>
+              <option>desi</option>
             </select>
           </label>
           <div className="form-control w-full">

@@ -18,17 +18,19 @@ function PopulorMenu({ hidden }) {
           heading="FROM OUR MENU"
         />
 
-        <div className="space-y-8 grid md:grid-cols-2 gap-4">
-          {populorItem.map((items) => (
-            <MenuItem key={items._id} items={items}></MenuItem>
-          ))}
+        <div className="hidden">
+          <div className="space-y-8 grid md:grid-cols-2 gap-4">
+            {populorItem.map((items) => (
+              <MenuItem key={items._id} items={items}></MenuItem>
+            ))}
+          </div>
+          <AddToCart
+            bgColor="white"
+            textColor="black"
+            btntext="View Full  Menu"
+            borderBottom="black"
+          ></AddToCart>
         </div>
-        <AddToCart
-          bgColor="white"
-          textColor="black"
-          btntext="View Full  Menu"
-          borderBottom="black"
-        ></AddToCart>
       </div>
       <ContactNumber hidden={hidden} />
     </>
