@@ -30,6 +30,8 @@ function Mycart() {
                 title: "Deleted!",
                 text: "The item has been deleted.",
                 icon: "success",
+                showConfirmButton: false,
+                timer: 1000
               });
             }
           })
@@ -116,7 +118,7 @@ function Mycart() {
                     <td className="p-2">
                       <button
                         onClick={() => handleDelete(item._id)}
-                        className="btn btn-error btn-circle btn-outline"
+                        className="btn btn-active btn-error btn-circle btn-outline"
                         aria-label={`Delete ${item.name}`}
                       >
                         <MdDelete />

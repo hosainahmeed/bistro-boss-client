@@ -28,7 +28,7 @@ function AddToCart({
       style={isHovered ? mouseOverStyle : btnStyle}
       onMouseOver={() => setIsHovered(true)}
       onMouseOut={() => setIsHovered(false)}
-      className="px-5 py-3 rounded-xl transition-all duration-300"
+    className="px-5 py-3 rounded-xl transition-all duration-300 btn btn-active"
     >
       {btntext}
     </button>

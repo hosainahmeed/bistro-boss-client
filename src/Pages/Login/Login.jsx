@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import bgImage from "../../assets/reservation/wood-grain-pattern-gray1x.png";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
@@ -15,19 +14,15 @@ import useAuth from "../../hooks/useAuth";
 import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 
 function Login() {
-  const bgimage = {
-    backgroundImage: `url(${bgImage})`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  };
   const [changePassword, setChangePassword] = useState(true);
   const changeIcon = changePassword === true ? false : true;
   const [disabled, setDisabled] = useState(true);
+  // TODO: find disable
   const { signIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || "/";;
+  const from = location.state?.from?.pathname || "/";
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
@@ -94,97 +89,81 @@ function Login() {
       <Helmet>
         <title>Bistro Boss | Log in</title>
       </Helmet>
-      <div className="relative min-h-screen flex items-center justify-center">
-        <div
-          style={bgimage}
-          className="absolute top-0 left-0 w-full h-full"
-        ></div>
-        <div className="relative z-10 w-full max-w-6xl mx-auto lg:px-8 py-16 lg:py-24 flex flex-col lg:flex-row items-center justify-center lg:gap-16 gap-8 px-4">
+      <div className="relative flex items-center justify-center">
+        <div className="relative z-10 w-full max-w-4xl mx-auto lg:px-4 py-12 lg:py-16 flex flex-col lg:flex-row items-center justify-center px-4">
           <img
             src={authImage}
             alt="Authentication"
-            className="w-full max-w-xs lg:max-w-sm"
+            className="hidden lg:block w-full max-w-xs lg:max-w-sm"
           />
-          <div className="w-full max-w-lg bg-white p-8 rounded-lg shadow-xl">
-            <h1 className="text-3xl lg:text-4xl font-semibold text-center py-4">
+          <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
+            <h1 className="text-2xl lg:text-3xl font-bold text-center">
               Log In
             </h1>
             <form onSubmit={handleLogin}>
               <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
-                </label>
                 <input
                   type="email"
                   name="email"
-                  placeholder="email"
-                  className="input input-bordered w-full"
+                  placeholder="Email Address"
+                  className="input input-bordered w-full py-2 px-4 rounded-md text-sm border-gray-300 focus:border-primary focus:ring-primary"
                   required
                 />
               </div>
 
-              <div className="form-control mt-4">
-                <label className="label">
-                  <span className="label-text">Password</span>
-                </label>
-                <div className="flex items-center input input-bordered w-full">
-                  <input
-                    type={changePassword ? "password" : "text"}
-                    name="password"
-                    placeholder="password"
-                    className="w-full outline-none"
-                    required
-                  />
-                  <span
-                    className="cursor-pointer pl-2"
-                    onClick={() => {
-                      setChangePassword(changeIcon);
-                    }}
-                  >
-                    {changeIcon ? <FaEyeSlash /> : <IoEyeSharp />}
-                  </span>
-                </div>
+              <div className="form-control relative">
+                <input
+                  type={changePassword ? "password" : "text"}
+                  name="password"
+                  placeholder="Password"
+                  className="input input-bordered w-full py-2 px-4 rounded-md text-sm border-gray-300 focus:border-primary focus:ring-primary"
+                  required
+                />
+                <span
+                  className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500"
+                  onClick={() => {
+                    setChangePassword(changeIcon);
+                  }}
+                >
+                  {changeIcon ? <FaEyeSlash /> : <IoEyeSharp />}
+                </span>
               </div>
 
-              <div className="form-control mt-4">
-                <label className="label">
+              <div className="form-control mb-4">
+                <label className="text-xs mb-1 text-gray-500">
                   <LoadCanvasTemplate />
                 </label>
                 <input
                   onBlur={handleValidCaptcha}
                   type="text"
                   name="captcha"
-                  placeholder="Type Captcha above here."
-                  className="input input-bordered w-full"
-                  // required
-                  // TODO:required uncomment
+                  placeholder="Type Captcha here"
+                  className="input input-bordered w-full py-2 px-4 rounded-md text-sm border-gray-300 focus:border-primary focus:ring-primary"
                 />
               </div>
 
-              <label className="label mt-2">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
-              </label>
-              {/* todo disabled make right down instant of false value */}
-              <div className="form-control mt-6">
+              <div className="form-control">
                 <input
+                // disable
                   disabled={false}
-                  className="btn btn-primary w-full"
+                  className="btn bg-[#D1A054] w-full rounded-md"
                   value="Login"
                   type="submit"
                 />
               </div>
             </form>
 
-            <p className="text-center py-4 text-[#D1A054]">
+            <p className="text-center text-sm text-gray-500">
               <small>
-                New here?
-                <Link to="/signup"> Create a New Account</Link>
+                New here?{" "}
+                <Link to="/signup" className="text-[#D1A054] hover:underline">
+                  Create a New Account
+                </Link>
               </small>
             </p>
-            <div className="text-center">
-              <SocialLogin></SocialLogin>
+
+            <div className="text-center mt-6">
+              <SocialLogin />
             </div>
           </div>
         </div>

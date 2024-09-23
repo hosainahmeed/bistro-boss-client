@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import Card from "../../../Components/Card/Card";
 import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 function MenuCard() {
   const [offered, setOffered] = useState([]);
+  const axiosPublic = useAxiosPublic();
 
   useEffect(() => {
-    fetch("menu.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const offeredItem = data.filter(
-          (items) => items.category === "offered"
-        );
-        setOffered(offeredItem);
-      });
-  }, []);
+    axiosPublic.get("/menu").then((res) => {
+      const offeredItem = res.data.filter(
+        (items) => items.category === "offered"
+      );
+      setOffered(offeredItem);
+    });
+  }, [axiosPublic]);
 
   return (
     <div className="px-2 overflow-x-hidden flex items-center justify-center flex-col">

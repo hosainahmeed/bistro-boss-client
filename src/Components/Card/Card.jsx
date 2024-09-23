@@ -14,7 +14,6 @@ function Card({ items }) {
   const [, refetch] = useCart();
 
   const addToCartItem = () => {
-
     if (user && user.email) {
       const cartItem = {
         menuItemId: _id,
@@ -23,19 +22,21 @@ function Card({ items }) {
         email: user.email,
         itemImage: image,
       };
-      axiosSecure
-        .post("/carts", cartItem)
-        .then((res) => {
-          if (res.data.insertedId) {
-            refetch();
-            Swal.fire({
-              icon: "success",
-              title: "Item added successfully",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-        });
+      axiosSecure.post("/carts", cartItem).then((res) => {
+        if (res.data.insertedId) {
+          refetch();
+          Swal.fire({
+            position: "top",
+            icon: "success",
+            text: "Item added successfully",
+            showConfirmButton: false,
+            timer: 1500,
+            animation:true,
+            backdrop:true
+          });
+          
+        }
+      });
     } else {
       Swal.fire({
         title: "Please login first to order food",

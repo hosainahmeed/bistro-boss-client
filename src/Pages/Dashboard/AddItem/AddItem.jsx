@@ -6,6 +6,8 @@ import Swal from "sweetalert2";
 const img_hosting_token = import.meta.env.VITE_Imgage_Upload_Token;
 function AddItem() {
   const image_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
+  console.log(image_hosting_url);
+  
   const axiosSecure = useAxiosSecure();
   const {
     register,
@@ -35,14 +37,15 @@ function AddItem() {
           console.log(data);
 
           axiosSecure.post("/menu", newItem).then((res) => {
-            // reset()
             console.log(res);
-
             if (res.data.insertedId) {
-                newItem  = {_id:res.data.insertedId}
+              newItem = { _id: res.data.insertedId };
+              console.log(newItem);
+              
+              reset();
               Swal.fire({
                 icon: "success",
-                title: `${newItem.name} is added`,
+                title: `${data.name} is added`,
                 showConfirmButton: false,
                 timer: 1500,
               });
@@ -73,10 +76,10 @@ function AddItem() {
             {...register("name", { required: true })}
           />
         </label>
-        <div className="flex justify-between gap-2">
+        <div className="flex justify-between flex-col md:flex-row items-center gap-2">
           <label className="form-control w-full">
             <div className="label">
-              <span className="label-text">Category*</span>
+              <span className="label-text font-semibold">Category*</span>
             </div>
             <select
               defaultValue="Category"
@@ -91,12 +94,13 @@ function AddItem() {
               <option>Pasta</option>
               <option>Pizza</option>
               <option>Burger</option>
+              <option>Desi</option>
             </select>
           </label>
           <div className="form-control w-full">
-            <div className="label">
+            <label className="label">
               <span className="label-text font-semibold">Price*</span>
-            </div>
+            </label>
             <input
               type="number"
               placeholder="Recipe price"
@@ -107,7 +111,7 @@ function AddItem() {
         </div>
         <label className="form-control">
           <div className="label">
-            <span className="label-text">Recipe Details*</span>
+            <span className="label-text font-semibold">Recipe Details*</span>
           </div>
           <textarea
             className="textarea textarea-bordered h-24 md:h-56"
@@ -122,7 +126,11 @@ function AddItem() {
           {...register("image", { required: true })}
         />
         <br />
-        <input className="btn btn-xl mt-4" type="submit" value="Add item" />
+        <input
+          className="btn btn-xl mt-4 bg-[#D1A054]"
+          type="submit"
+          value="Add item"
+        />
       </form>
     </div>
   );
