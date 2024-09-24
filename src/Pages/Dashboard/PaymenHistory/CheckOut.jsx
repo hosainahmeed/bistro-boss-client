@@ -12,7 +12,7 @@ function CheckOut({ cart, price }) {
   const [processing, setProcessing] = useState(false);
   const [transactionId, setTransactionId] = useState(false);
   const { user } = useAuth();
-  const axiosSecure = useAxiosSecure();
+  const [axiosSecure] = useAxiosSecure();
 
   const handleSubmit = async (event) => {
     event.preventDefault();

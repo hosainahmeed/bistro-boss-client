@@ -16,7 +16,7 @@ const useAxiosSecure = () => {
     // Request interceptor to inject the Authorization header
     const requestInterceptor = axiosSecureInstance.interceptors.request.use(
       (config) => {
-        const token = localStorage.getItem("accsess-token");
+        const token = localStorage.getItem("access-token"); // Corrected the typo here
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
@@ -36,9 +36,7 @@ const useAxiosSecure = () => {
           (error.response.status === 401 || error.response.status === 403)
         ) {
           await logOut(); // Call the logOut method asynchronously
-          setTimeout(() => {
-            navigate("/login");
-          }, 0); // Redirect to the login page
+          navigate("/login");
         }
         return Promise.reject(error);
       }
@@ -51,7 +49,7 @@ const useAxiosSecure = () => {
     };
   }, [logOut, navigate, axiosSecureInstance]);
 
-  return [axiosSecureInstance];
+  return axiosSecureInstance;
 };
 
 export default useAxiosSecure;

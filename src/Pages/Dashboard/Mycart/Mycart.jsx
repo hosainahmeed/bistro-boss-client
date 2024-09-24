@@ -8,7 +8,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 function Mycart() {
   const [cart, refetch] = useCart();
   const total = cart.reduce((sum, item) => item.price + sum, 0);
-  const axiosSecure = useAxiosSecure();
+  const [axiosSecure] = useAxiosSecure();
 
   const handleDelete = (id) => {
     Swal.fire({

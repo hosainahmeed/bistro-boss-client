@@ -11,9 +11,8 @@ import useAdmin from "../hooks/useAdmin";
 
 function DashBoard() {
   const [cart] = useCart();
-  // TODO:
-  // const isAdmin = true;
   const [isAdmin] = useAdmin();
+  
 
   return (
     <div>

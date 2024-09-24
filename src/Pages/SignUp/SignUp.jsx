@@ -14,7 +14,7 @@ function SignUp() {
   const [changePassword, setChangePassword] = useState(true);
   const changeIcon = changePassword === true ? false : true;
   const { createUser, updateUserProfile } = useAuth();
-  const axiosSecure = useAxiosSecure();
+  const [axiosSecure] = useAxiosSecure();
   const navigate = useNavigate();
   const {
     register,

@@ -8,7 +8,7 @@ function AddItem() {
   const image_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
   console.log(image_hosting_url);
   
-  const axiosSecure = useAxiosSecure();
+  const [axiosSecure] = useAxiosSecure();
   const {
     register,
     handleSubmit,

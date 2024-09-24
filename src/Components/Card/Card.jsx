@@ -10,7 +10,7 @@ function Card({ items }) {
   const navigate = useNavigate();
   const { user } = useAuth();
   const location = useLocation();
-  const axiosSecure = useAxiosSecure();
+  const [axiosSecure] = useAxiosSecure();
   const [, refetch] = useCart();
 
   const addToCartItem = () => {
