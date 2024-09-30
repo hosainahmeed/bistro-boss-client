@@ -4,11 +4,24 @@ import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useEffect, useState } from "react";
+import useAdmin from "../../../hooks/useAdmin";
 
 function Mycart() {
   const [cart, refetch] = useCart();
   const total = cart.reduce((sum, item) => item.price + sum, 0);
   const [axiosSecure] = useAxiosSecure();
+  const [disabledPayment, setDisablePayment] = useState(true);
+  const [isAdmin] = useAdmin();
+
+  useEffect(() => {
+    // Disable the payment button if the total is <= 0 or the user is an admin
+    if (total <= 0 || isAdmin) {
+      setDisablePayment(true);
+    } else {
+      setDisablePayment(false);
+    }
+  }, [total, isAdmin]);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -31,7 +44,7 @@ function Mycart() {
                 text: "The item has been deleted.",
                 icon: "success",
                 showConfirmButton: false,
-                timer: 1000
+                timer: 1000,
               });
             }
           })
@@ -54,9 +67,16 @@ function Mycart() {
 
       <div className="text-base mb-4 flex-col items-end md:flex-row md:text-3xl uppercase flex md:items-center md:justify-between">
         <h1>Total orders: {cart.length}</h1>
-        <h1>Total price: ${total}</h1>
-        <Link to="/dashboard/payment">
-          <button className="btn btn-sm md:btn-md lg:btn-lg uppercase bg-[#D1A054]">
+        <h1>Total price: ${total.toFixed(2)}</h1>
+        <Link to={disabledPayment ? "" : "/dashboard/payment"}>
+          <button
+            disabled={disabledPayment}
+            className={`btn btn-sm md:btn-md lg:btn-lg uppercase ${
+              disabledPayment
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-[#D1A054]"
+            }`}
+          >
             Pay
           </button>
         </Link>
@@ -69,7 +89,7 @@ function Mycart() {
               Oh no! <br />
               No foods 😨
               <br />
-              Its never happened before.
+              It's never happened before.
             </div>
           </div>
           <div className="chat chat-end animate-bounce">

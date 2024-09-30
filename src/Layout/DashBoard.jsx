@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { FaAd, FaBook, FaCalendar, FaList, FaShoppingCart, FaUtensils } from "react-icons/fa";
+import { FaAd, FaBook,  FaList, FaShoppingCart, FaUtensils, FaWallet } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
 import { FaShoppingBag } from "react-icons/fa";
@@ -84,13 +84,13 @@ function DashBoard() {
                 </li>
                 <li>
                   <NavLink to="/dashboard/reservation">
-                    <FaCalendar></FaCalendar>
+                    <FaWallet></FaWallet>
                     Reservation
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/dashboard/history">
-                    <FaShoppingCart></FaShoppingCart>PATMENT HISTORY
+                  <FaBook></FaBook>PATMENT HISTORY
                   </NavLink>
                 </li>
                 <li>

@@ -26,11 +26,10 @@ function Card({ items }) {
         if (res.data.insertedId) {
           refetch();
           Swal.fire({
-            position: "top",
-            icon: "success",
-            text: "Item added successfully",
+            position:"top",
+            text: "Item add to cart",
             showConfirmButton: false,
-            timer: 1500,
+            timer: 500,
             animation:true,
             backdrop:true
           });

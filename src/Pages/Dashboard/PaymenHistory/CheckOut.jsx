@@ -4,16 +4,16 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import "../styles/Common.css";
+import { useNavigate } from "react-router-dom";
 
 function CheckOut({ cart, price }) {
   const stripe = useStripe();
   const elements = useElements();
   const [clientSecret, setClientSecret] = useState();
   const [processing, setProcessing] = useState(false);
-  const [transactionId, setTransactionId] = useState(false);
   const { user } = useAuth();
   const [axiosSecure] = useAxiosSecure();
-
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!stripe || !elements) {
@@ -45,13 +45,13 @@ function CheckOut({ cart, price }) {
         showConfirmButton: false,
         timer: 1500,
       });
+      navigate("/dashboard/history", { state: { transactionId: paymentIntent.id } });
     }
 
     setProcessing(true);
 
-    const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
-      clientSecret,
-      {
+    const { paymentIntent, error: confirmError } =
+      await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: card,
           billing_details: {
@@ -59,8 +59,9 @@ function CheckOut({ cart, price }) {
             email: user?.email || "unknown",
           },
         },
-      }
-    );
+      });
+      
+      
 
     if (confirmError) {
       Swal.fire({
@@ -75,7 +76,6 @@ function CheckOut({ cart, price }) {
     setProcessing(false);
 
     if (paymentIntent?.status === "succeeded") {
-      setTransactionId(paymentIntent.id);
       const payment = {
         email: user?.email,
         transactionId: paymentIntent.id,
@@ -90,7 +90,12 @@ function CheckOut({ cart, price }) {
 
       axiosSecure.post("/payments", payment).then((res) => {
         if (res.data.insertedId) {
-          console.log(res.data.insertedId);
+          Swal.fire({
+            icon: "success",
+            title: "Payment successful",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
       });
     }
@@ -98,7 +103,6 @@ function CheckOut({ cart, price }) {
 
   useEffect(() => {
     axiosSecure.post("/create-checkout-session", { price }).then((res) => {
-      console.log(res.data.clientSecret);
       setClientSecret(res.data.clientSecret);
     });
   }, [price, axiosSecure]);
@@ -129,16 +133,11 @@ function CheckOut({ cart, price }) {
         <button
           className="btn btn-active btn-primary px-12 text-xl mt-12 "
           type="submit"
-          disabled={!stripe || !clientSecret || processing} // Changed 'proccesing' to 'processing'
+          disabled={!stripe || !clientSecret || processing } // Changed 'proccesing' to 'processing'
         >
           Pay
         </button>
       </form>
-      {transactionId && (
-        <p className="text-xl text-green-700 text-center">
-          Payment succeeded with transaction Id: {transactionId}
-        </p>
-      )}
     </div>
   );
 }
