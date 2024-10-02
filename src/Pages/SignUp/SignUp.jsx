@@ -107,7 +107,7 @@ function SignUp() {
                 type="text"
                 placeholder="Name"
                 {...register("name", { required: true })}
-                className="input input-bordered w-full"
+                className="input input-bordered w-full "
               />
               {errors.name && (
                 <span className="text-red-700">This field is required</span>
