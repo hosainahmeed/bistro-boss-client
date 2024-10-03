@@ -8,6 +8,7 @@ function PopulorMenu({ hidden }) {
   const [menu] = useMenu();
   
   const populorItem = menu.filter((item) => item.category === "popular");
+  console.log(populorItem);
 
   return (
     <>
@@ -18,7 +19,7 @@ function PopulorMenu({ hidden }) {
           heading="FROM OUR MENU"
         />
 
-        <div className="hidden">
+        <div>
           <div className="space-y-8 grid md:grid-cols-2 gap-4">
             {populorItem.map((items) => (
               <MenuItem key={items._id} items={items}></MenuItem>
