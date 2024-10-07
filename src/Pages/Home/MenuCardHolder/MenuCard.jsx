@@ -12,6 +12,7 @@ function MenuCard() {
       const offeredItem = res.data.filter(
         (items) => items.category === "offered"
       );
+      console.log(offeredItem);
       setOffered(offeredItem);
     });
   }, [axiosPublic]);

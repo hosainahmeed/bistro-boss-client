@@ -2,22 +2,30 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { useEffect, useState } from "react";
 import { Rating } from "@smastrom/react-rating";
 import { FaQuoteLeft } from "react-icons/fa";
 
 import "@smastrom/react-rating/style.css";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
 function ReviewSwiper() {
-  const [review, setReview] = useState([]);
   const axiosPublic = useAxiosPublic();
-  useEffect(() => {
-    axiosPublic.get("/review").then((res) => setReview(res.data));
-  }, []);
+  const { data: reviews = [], isLoading: reviewsLoading } = useQuery({
+    queryKey: ["review"],
+    queryFn: async () => {
+      const result = await axiosPublic.get("/review");
+      result.data;
+    },
+  });
+  if (reviewsLoading) {
+    return;
+  }
+  console.log(reviews);
+  
   return (
     <div className="my-12">
       <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
-        {review.map((data) => (
+        {reviews.map((data) => (
           <SwiperSlide key={data._id}>
             <div className="px-12 md:p-28 flex items-center justify-center flex-col gap-4 text-center">
               <Rating style={{ maxWidth: 150 }} value={data.rating} readOnly />

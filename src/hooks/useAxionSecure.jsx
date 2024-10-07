@@ -9,7 +9,7 @@ const useAxiosSecure = () => {
 
   // Create axios instance with baseURL
   const axiosSecureInstance = axios.create({
-    baseURL: "https://bistro-boss-server-5gncpmc8s-hosain-alis-projects.vercel.app/menu", // Adjust the base URL as needed
+    baseURL: "https://bistro-boss-server-o8a62qy2q-hosain-alis-projects.vercel.app", // Adjust the base URL as needed
   });
 
   useEffect(() => {
